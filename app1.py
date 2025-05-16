@@ -14,11 +14,13 @@ MODEL_FILE_NAME = "hateclipper_model_finetuned1.pt"
 def download_model():
     if not os.path.exists(MODEL_FILE_NAME):
         url = f"https://drive.google.com/uc?id={MODEL_FILE_ID}"
-        st.info("Downloading model from Google Drive. This may take a while...")
-        gdown.download(url, MODEL_FILE_NAME, quiet=False)
+        with st.spinner("Downloading model from Google Drive. This may take a while..."):
+            gdown.download(url, MODEL_FILE_NAME, quiet=False)
+        st.success("Model downloaded successfully!")
     else:
         st.success("Model already downloaded.")
     return MODEL_FILE_NAME
+
 
 @st.cache_resource
 def load_model(model_path):

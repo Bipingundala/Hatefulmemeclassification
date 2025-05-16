@@ -7,7 +7,7 @@ import os
 import gdown
 
 # Google Drive file ID of your model
-MODEL_FILE_ID = "https://drive.google.com/file/d/1vtfq0zb_Kb2Mf2rW9P_phnAVUuEMbOlD"
+MODEL_FILE_ID = "1vtfq0zb_Kb2Mf2rW9P_phnAVUuEMbOlD"
 MODEL_FILE_NAME = "hateclipper_model_finetuned1.pt"
 
 @st.cache_resource

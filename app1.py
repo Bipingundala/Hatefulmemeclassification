@@ -83,3 +83,13 @@ if uploaded_file is not None and caption:
     st.subheader("Prediction Probabilities")
     st.write(f"Non-Hateful: {probs[0][0].item()*100:.2f}%")
     st.write(f"Hateful: {probs[0][1].item()*100:.2f}%")
+
+# Developer Info in Sidebar
+with st.sidebar:
+    st.markdown("---")
+    st.header("👨‍💻 Developer Info")
+    st.write("**Name:** Gundala Bipin")
+    st.write("**Email:** bipin.gundala@gmail.com")
+    st.write("**College:** RVR & JC College of Engineering")
+    st.write("[GitHub](https://github.com/yourgithub) | [LinkedIn](https://linkedin.com/in/yourprofile)")
+    st.markdown("---")

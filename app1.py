@@ -91,5 +91,5 @@ with st.sidebar:
     st.write("**Name:** Gundala Bipin")
     st.write("**Email:** bipin.gundala@gmail.com")
     st.write("**College:** RVR & JC College of Engineering")
-    st.write("[GitHub](https://github.com/yourgithub) | [LinkedIn](https://linkedin.com/in/yourprofile)")
+    st.write("[GitHub](https://github.com/Bipingundala) | [LinkedIn](https://www.linkedin.com/in/bipin-gundala-b54496210/)")
     st.markdown("---")

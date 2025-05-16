@@ -60,31 +60,35 @@ st.markdown("Upload a meme image and enter its caption to check if it's **hatefu
 uploaded_file = st.file_uploader("Upload Meme Image", type=['png', 'jpg', 'jpeg'])
 caption = st.text_area("Enter Meme Caption")
 
-if uploaded_file is not None and caption:
-    image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded Meme", use_column_width=True)
+predict_button = st.button("Predict")
 
-    # Processing
-    encoding = processor(caption, padding='max_length', truncation=True, max_length=77, return_tensors='pt')
-    pixel_values = processor(images=image, return_tensors='pt')['pixel_values']
-
-    with torch.no_grad():
-        outputs = model(input_ids=encoding['input_ids'], 
-                        pixel_values=pixel_values, 
-                        attention_mask=encoding['attention_mask'])
-        
-        probs = torch.softmax(outputs, dim=1)
-        pred = torch.argmax(probs, dim=1).item()
-
-    # Display Result
-    if pred == 1:
-        st.error("⚠️ This meme is **Hateful**")
+if predict_button:
+    if uploaded_file is None or not caption.strip():
+        st.warning("Please upload an image and enter a caption before predicting.")
     else:
-        st.success("✅ This meme is **Non-Hateful**")
+        image = Image.open(uploaded_file).convert("RGB")
+        st.image(image, caption="Uploaded Meme", use_column_width=True)
 
-    st.subheader("Prediction Probabilities")
-    st.write(f"Non-Hateful: {probs[0][0].item()*100:.2f}%")
-    st.write(f"Hateful: {probs[0][1].item()*100:.2f}%")
+        encoding = processor(caption, padding='max_length', truncation=True, max_length=77, return_tensors='pt')
+        pixel_values = processor(images=image, return_tensors='pt')['pixel_values']
+
+        with torch.no_grad():
+            outputs = model(input_ids=encoding['input_ids'], 
+                            pixel_values=pixel_values, 
+                            attention_mask=encoding['attention_mask'])
+            
+            probs = torch.softmax(outputs, dim=1)
+            pred = torch.argmax(probs, dim=1).item()
+
+        if pred == 1:
+            st.error("⚠️ This meme is **Hateful**")
+        else:
+            st.success("✅ This meme is **Non-Hateful**")
+
+        st.subheader("Prediction Probabilities")
+        st.write(f"Non-Hateful: {probs[0][0].item()*100:.2f}%")
+        st.write(f"Hateful: {probs[0][1].item()*100:.2f}%")
+
 
 # Developer Info in Sidebar
 with st.sidebar:
